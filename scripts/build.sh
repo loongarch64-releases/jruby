@@ -27,9 +27,7 @@ prepare()
     echo "📦 [Prepare] Setting up build environment..."
     
     [ -d "${SRCS}/${VERSION}" ] && rm -rf "${SRCS}/${VERSION}"
-    mkdir -p "${SRCS}/${VERSION}"
-    wget -O "${SRCS}/${VERSION}.tar.gz" --quiet --show-progress "https://github.com/${UPSTREAM_OWNER}/${UPSTREAM_REPO}/releases/download/${VERSION}/jruby-src-${VERSION}.tar.gz"
-    tar -xzf "${SRCS}/${VERSION}.tar.gz" -C "${SRCS}/${VERSION}" --strip-components=1
+    git clone -b "${VERSION}" --depth 1 "https://github.com/${UPSTREAM_OWNER}/${UPSTREAM_REPO}" "${SRCS}/${VERSION}"
     if [[ "${VERSION}" == "10.0.2.0" || "${VERSION}" == "10.0.3.0" ]]; then
 	# 这两个版本在制作发布包时拉取离线文档的逻辑会导致版本冲突
         sed -i 's/ruby3.4-doc/ruby3.4-doc_3.4.5/' "${SRCS}/${VERSION}/maven/jruby-dist/pom.rb"

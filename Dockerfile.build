@@ -1,7 +1,8 @@
 FROM lcr.loongnix.cn/library/openjdk:21
 
 RUN apt-get update && apt-get install -y \
-    wget \
+    git \
+    ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
 CMD ["/bin/bash"]
